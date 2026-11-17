@@ -449,6 +449,23 @@
   animation-play-state: paused !important;
 }
 
+.section-motion-paused .animate-float-gentle,
+.section-motion-paused .animate-float-sway,
+.section-motion-paused .animate-heart-bounce,
+.section-motion-paused .animate-butterfly-drift,
+.section-motion-paused .animate-butterfly-curve-left,
+.section-motion-paused .animate-butterfly-curve-right,
+.section-motion-paused .animate-butterfly-glide,
+.section-motion-paused .animate-wing-flap-left,
+.section-motion-paused .animate-wing-flap-right,
+.section-motion-paused .animate-flower-sway,
+.section-motion-paused .animate-bow-wiggle,
+.section-motion-paused .animate-teddy-idle,
+.section-motion-paused .animate-twinkle,
+.section-motion-paused .animate-spin-slow {
+  animation-play-state: paused;
+}
+
 @media (max-width: 639px) {
   html {
     scroll-padding-top: calc(4rem + env(safe-area-inset-top));
@@ -465,7 +482,7 @@
   .animate-flower-sway,
   .animate-bow-wiggle,
   .animate-teddy-idle {
-    animation-duration: 9s;
+    animation-duration: 8s;
   }
 
   .animate-wing-flap-left,
@@ -474,7 +491,7 @@
   }
 
   .animate-twinkle {
-    animation-duration: 5s;
+    animation-duration: 4.5s;
   }
 
   .blur-3xl {
@@ -487,6 +504,14 @@
 
   .backdrop-blur-sm {
     --tw-backdrop-blur: blur(4px);
+  }
+
+  .sticker-shadow {
+    filter: drop-shadow(0 3px 5px rgba(176, 86, 122, 0.2)) saturate(1.08);
+  }
+
+  main > section:not(#hero) {
+    scroll-margin-top: calc(4rem + env(safe-area-inset-top));
   }
 
   button:active,
@@ -542,5 +567,14 @@
   .animate-twinkle,
   .animate-spin-slow {
     animation: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }

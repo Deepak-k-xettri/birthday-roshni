@@ -65,10 +65,21 @@ export const ConfettiCanvas = forwardRef<ConfettiCanvasHandle>((_, ref) => {
       }
     };
 
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      } else if (particlesRef.current.length > 0 && rafRef.current === null) {
+        rafRef.current = requestAnimationFrame(tick);
+      }
+    };
+
     resize();
     window.addEventListener('resize', resize);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => {
       window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
       }
@@ -76,6 +87,10 @@ export const ConfettiCanvas = forwardRef<ConfettiCanvasHandle>((_, ref) => {
   }, []);
 
   const tick = () => {
+    if (document.hidden) {
+      rafRef.current = null;
+      return;
+    }
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');

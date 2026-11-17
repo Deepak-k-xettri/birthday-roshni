@@ -31,10 +31,12 @@ export const SmartImage: React.FC<SmartImageProps> = ({
 }) => {
   const [activeSrc, setActiveSrc] = useState<string | null>(src);
   const [useIllustration, setUseIllustration] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     setActiveSrc(src);
     setUseIllustration(false);
+    setIsLoaded(false);
   }, [src, fallbackSrc]);
 
   const handleError = () => {
@@ -68,7 +70,8 @@ export const SmartImage: React.FC<SmartImageProps> = ({
       fetchPriority={loading === 'eager' ? 'high' : 'auto'}
       referrerPolicy="no-referrer"
       onError={handleError}
-      className={className}
+      onLoad={() => setIsLoaded(true)}
+      className={`${className} transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
     />
   );
 };

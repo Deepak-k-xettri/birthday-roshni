@@ -36,6 +36,23 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const sections = document.querySelectorAll<HTMLElement>('main > section, footer');
+    if (!('IntersectionObserver' in window)) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle('section-motion-paused', !entry.isIntersecting);
+        });
+      },
+      { rootMargin: '160px 0px' }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [hasEntered]);
+
   const triggerConfetti = (originY = 0.48, count = 55) => {
     confettiRef.current?.burst({ originX: 0.5, originY, count });
   };
