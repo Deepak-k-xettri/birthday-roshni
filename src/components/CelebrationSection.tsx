@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useRef, useState } from 'react';
+import { motion, AnimatePresence, useInView } from 'motion/react';
 import { PartyPopper } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
 import {
@@ -21,6 +21,8 @@ export const CelebrationSection: React.FC<CelebrationSectionProps> = ({
   onCelebrateBurst,
 }) => {
   const [celebrated, setCelebrated] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const isInView = useInView(sectionRef, { margin: '160px 0px' });
 
   const handleCelebrate = () => {
     setCelebrated(true);
@@ -28,7 +30,7 @@ export const CelebrationSection: React.FC<CelebrationSectionProps> = ({
   };
 
   return (
-    <section id="celebrate" className="relative overflow-hidden py-16 sm:py-22">
+    <section ref={sectionRef} id="celebrate" className="relative overflow-hidden py-16 sm:py-22">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="scrapbook-paper relative overflow-hidden rounded-[28px] border border-[#EAD0DA] px-5 py-14 text-center shadow-[0_18px_46px_rgba(164,114,134,0.13)] sm:px-12 sm:py-18">
           <div className="doodle-border pointer-events-none absolute inset-3 rounded-[22px] sm:inset-4" />
@@ -62,9 +64,15 @@ export const CelebrationSection: React.FC<CelebrationSectionProps> = ({
                 animate={
                   celebrated
                     ? { scale: [1, 1.08, 1], rotate: [0, -2, 2, 0] }
-                    : { scale: [1, 1.02, 1] }
+                    : isInView
+                      ? { scale: [1, 1.02, 1] }
+                      : { scale: 1 }
                 }
-                transition={{ duration: celebrated ? 0.6 : 4, repeat: celebrated ? 0 : Infinity }}
+                transition={{
+                  duration: celebrated ? 0.6 : 4.8,
+                  repeat: celebrated || !isInView ? 0 : Infinity,
+                  ease: [0.37, 0, 0.63, 1],
+                }}
                 className="relative flex h-full w-full items-center justify-center rounded-full border-2 border-[#FFFEFC] bg-gradient-to-br from-[#F8DCE5] via-[#FFF8F0] to-[#DFECF8] shadow-[0_14px_34px_rgba(164,114,134,0.18)]"
               >
                 <span className="font-display text-5xl font-bold tracking-tight text-[#C95B7F] sm:text-6xl">

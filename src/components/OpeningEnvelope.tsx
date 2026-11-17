@@ -81,15 +81,15 @@ export const OpeningEnvelope: React.FC<OpeningEnvelopeProps> = ({
     // 2. Heart wax seal animates & pops off
     timersRef.current.push(window.setTimeout(() => setStage('unsealing'), 240));
     // 3. Upper triangular flap rotates open smoothly
-    timersRef.current.push(window.setTimeout(() => setStage('flapOpen'), 560));
+    timersRef.current.push(window.setTimeout(() => setStage('flapOpen'), 520));
     // 4. Inner birthday letter slides upward from inside the pocket
-    timersRef.current.push(window.setTimeout(() => setStage('sliding'), 1080));
+    timersRef.current.push(window.setTimeout(() => setStage('sliding'), 1220));
     // 5. Inner letter unfolds smoothly
-    timersRef.current.push(window.setTimeout(() => setStage('unfolding'), 1560));
+    timersRef.current.push(window.setTimeout(() => setStage('unfolding'), 1740));
     // 6 & 7. Bloom tiny hearts/sparkles/flowers & reveal full birthday message
-    timersRef.current.push(window.setTimeout(() => setStage('revealed'), 2050));
+    timersRef.current.push(window.setTimeout(() => setStage('revealed'), 2310));
     // Enter full celebration page smoothly
-    timersRef.current.push(window.setTimeout(() => onEnterCelebration(), 4100));
+    timersRef.current.push(window.setTimeout(() => onEnterCelebration(), 4350));
   };
 
   return (
@@ -328,6 +328,7 @@ export const OpeningEnvelope: React.FC<OpeningEnvelopeProps> = ({
                 viewBox="0 0 340 124"
                 className="h-full w-full drop-shadow-[0_6px_10px_rgba(164,114,134,0.16)]"
                 preserveAspectRatio="none"
+                style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
                 aria-hidden="true"
               >
                 <defs>
@@ -345,6 +346,31 @@ export const OpeningEnvelope: React.FC<OpeningEnvelopeProps> = ({
                   strokeWidth="2"
                 />
                 {/* Delicate stitched paper border inside triangle */}
+                <path
+                  d="M22 9 L170 106 L318 9"
+                  fill="none"
+                  stroke="#E5B8C8"
+                  strokeDasharray="4 4"
+                  strokeWidth="1.4"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 340 124"
+                className="absolute inset-0 h-full w-full"
+                preserveAspectRatio="none"
+                style={{
+                  transform: 'rotateX(180deg)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 2 Q2 0 12 0 H328 Q338 0 338 2 L182 114 Q170 122 158 114 Z"
+                  fill="#FBE8EE"
+                  stroke="#DFB5C4"
+                  strokeWidth="2"
+                />
                 <path
                   d="M22 9 L170 106 L318 9"
                   fill="none"

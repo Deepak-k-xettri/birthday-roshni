@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'motion/react';
 import { ArrowDown, Sparkles } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
 import { SmartImage } from './SmartImage';
@@ -19,8 +19,12 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onCelebrateClick }) => {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const isInView = useInView(sectionRef, { margin: '160px 0px' });
+
   return (
     <section
+      ref={sectionRef}
       id="hero"
       className="relative overflow-hidden bg-gradient-to-b from-[#F8DCE5]/45 via-[#FFF8F0] to-[#FFF8F0] pt-8 pb-16 sm:pt-14 sm:pb-24"
     >
@@ -41,8 +45,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onCelebrateClick }) =>
             {/* Playful Scrapbook 18 Stamp + Stickers */}
             <div className="mb-6 flex items-center gap-4">
               <motion.div
-                animate={{ y: [0, -4, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                animate={isInView ? { y: [0, -4, 0] } : { y: 0 }}
+                transition={{
+                  duration: 5.5,
+                  repeat: isInView ? Infinity : 0,
+                  ease: [0.37, 0, 0.63, 1],
+                }}
                 className="relative flex h-[78px] w-[78px] shrink-0 -rotate-3 items-center justify-center rounded-2xl border border-[#EAD0DA] bg-gradient-to-br from-[#FFFEFC] via-[#FFF8F0] to-[#F8DCE5]/60 shadow-[0_12px_28px_rgba(164,114,134,0.16)] sm:h-22 sm:w-22"
               >
                 <span
