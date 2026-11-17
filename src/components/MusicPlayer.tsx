@@ -2,57 +2,39 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Music, Pause, Play } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
 
-// Soft, dreamy romantic piano progression (Fmaj7 -> G6 -> Em7 -> Am7 -> Dm7 -> G7 -> Cmaj7)
-// Frequencies in Hz for warm gentle right-hand arpeggios + left-hand root warmth
+// A slow, chord-backed romantic piano phrase in C major. The bass and inner
+// chord voices ring beneath a gentle melody, then resolve back to Cmaj7.
 const ROMANTIC_PIANO_STEPS: Array<{ notes: number[]; dur: number }> = [
-  // Fmaj7
-  { notes: [174.61, 349.23], dur: 0.55 },
-  { notes: [440.0], dur: 0.55 },
-  { notes: [523.25], dur: 0.55 },
-  { notes: [659.25], dur: 0.75 },
-  { notes: [523.25], dur: 0.55 },
-  { notes: [440.0], dur: 0.65 },
-  // G6
-  { notes: [196.0, 392.0], dur: 0.55 },
-  { notes: [493.88], dur: 0.55 },
-  { notes: [587.33], dur: 0.55 },
-  { notes: [659.25], dur: 0.75 },
-  { notes: [587.33], dur: 0.55 },
-  { notes: [493.88], dur: 0.65 },
-  // Em7
-  { notes: [164.81, 329.63], dur: 0.55 },
-  { notes: [392.0], dur: 0.55 },
-  { notes: [493.88], dur: 0.55 },
-  { notes: [587.33], dur: 0.75 },
-  { notes: [493.88], dur: 0.55 },
-  { notes: [392.0], dur: 0.65 },
-  // Am7
-  { notes: [220.0, 329.63], dur: 0.55 },
-  { notes: [392.0], dur: 0.55 },
-  { notes: [440.0], dur: 0.55 },
-  { notes: [523.25], dur: 0.75 },
-  { notes: [440.0], dur: 0.55 },
-  { notes: [392.0], dur: 0.65 },
-  // Dm7
-  { notes: [146.83, 293.66], dur: 0.55 },
-  { notes: [349.23], dur: 0.55 },
-  { notes: [440.0], dur: 0.55 },
-  { notes: [523.25], dur: 0.75 },
-  { notes: [440.0], dur: 0.55 },
-  { notes: [349.23], dur: 0.65 },
-  // G7sus4 -> G7
-  { notes: [196.0, 293.66], dur: 0.55 },
-  { notes: [392.0], dur: 0.55 },
-  { notes: [523.25], dur: 0.6 },
-  { notes: [493.88], dur: 0.8 },
-  { notes: [392.0], dur: 0.55 },
-  { notes: [349.23], dur: 0.65 },
-  // Cmaj7
-  { notes: [130.81, 261.63], dur: 0.6 },
-  { notes: [329.63], dur: 0.55 },
-  { notes: [392.0], dur: 0.55 },
-  { notes: [493.88], dur: 0.9 },
-  { notes: [523.25], dur: 1.15 },
+  // Cmaj7: warm opening, then a rising little phrase
+  { notes: [130.81, 261.63, 392.0, 659.25], dur: 0.82 },
+  { notes: [783.99], dur: 0.48 },
+  { notes: [659.25], dur: 0.62 },
+  { notes: [587.33], dur: 0.58 },
+  { notes: [523.25], dur: 0.76 },
+  { notes: [659.25], dur: 0.52 },
+  // Am7: tender downward answer
+  { notes: [110.0, 220.0, 329.63, 659.25], dur: 0.82 },
+  { notes: [783.99], dur: 0.48 },
+  { notes: [659.25], dur: 0.62 },
+  { notes: [587.33], dur: 0.58 },
+  { notes: [523.25], dur: 0.76 },
+  { notes: [440.0], dur: 0.52 },
+  // Fmaj7: open, glowing middle phrase
+  { notes: [87.31, 174.61, 261.63, 440.0], dur: 0.82 },
+  { notes: [523.25], dur: 0.48 },
+  { notes: [659.25], dur: 0.62 },
+  { notes: [698.46], dur: 0.58 },
+  { notes: [659.25], dur: 0.76 },
+  { notes: [523.25], dur: 0.52 },
+  // G6: gentle lift and a soft resolution back home
+  { notes: [98.0, 196.0, 293.66, 587.33], dur: 0.82 },
+  { notes: [493.88], dur: 0.48 },
+  { notes: [587.33], dur: 0.62 },
+  { notes: [659.25], dur: 0.58 },
+  { notes: [587.33], dur: 0.76 },
+  { notes: [523.25, 392.0], dur: 0.7 },
+  { notes: [493.88, 392.0], dur: 0.9 },
+  { notes: [523.25, 392.0], dur: 1.1 },
 ];
 
 export const MusicPlayer: React.FC = () => {
@@ -73,11 +55,11 @@ export const MusicPlayer: React.FC = () => {
     if (masterBusRef.current) return masterBusRef.current;
 
     const master = ctx.createGain();
-    master.gain.setValueAtTime(0.65, ctx.currentTime);
+    master.gain.setValueAtTime(0.72, ctx.currentTime);
 
     const lowpass = ctx.createBiquadFilter();
     lowpass.type = 'lowpass';
-    lowpass.frequency.setValueAtTime(1650, ctx.currentTime);
+    lowpass.frequency.setValueAtTime(2300, ctx.currentTime);
 
     // Subtle dreamy echo tail
     const delay = ctx.createDelay(1.0);
