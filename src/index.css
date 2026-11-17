@@ -1,0 +1,546 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cormorant Garamond", "Noto Sans Devanagari", Georgia, serif;
+  --font-script: "Caveat", "Noto Sans Devanagari", cursive;
+  --font-sans: "Plus Jakarta Sans", "Noto Sans Devanagari", system-ui, -apple-system, sans-serif;
+  --font-nepali: "Noto Sans Devanagari", "Plus Jakarta Sans", sans-serif;
+
+  --color-baby-pink: #F8DCE5;
+  --color-soft-cream: #FFF8F0;
+  --color-lavender: #E9E0F5;
+  --color-peach: #F9E5D5;
+  --color-baby-blue: #DFECF8;
+  --color-soft-white: #FFFEFC;
+
+  --color-cocoa-ink: #4A343E;
+  --color-plum-muted: #7D616E;
+  --color-rose-accent: #C95B7F;
+  --color-rose-hover: #B64A6E;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 4.5rem;
+    font-family: var(--font-sans);
+    background-color: #FFF8F0;
+    color: #4A343E;
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    overflow-x: clip;
+    background-color: #FFF8F0;
+    min-width: 320px;
+  }
+
+  button,
+  a,
+  [role="button"] {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  button {
+    touch-action: manipulation;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-script {
+  font-family: var(--font-script);
+}
+
+.font-nepali {
+  font-family: var(--font-nepali);
+}
+
+/* Soft teenage scrapbook dot-grid paper */
+.scrapbook-paper {
+  background-color: #FFFEFC;
+  background-image:
+    radial-gradient(rgba(182, 130, 152, 0.14) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 248, 240, 0.55) 0%, rgba(255, 254, 252, 0.95) 100%);
+  background-size: 20px 20px, 100% 100%;
+}
+
+/* Gentle ruled notebook lines for handwritten letter */
+.letter-lines {
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 35px,
+    rgba(222, 187, 200, 0.32) 35px,
+    rgba(222, 187, 200, 0.32) 36px
+  );
+  line-height: 36px;
+}
+
+/* Delicate hand-drawn doodle border */
+.doodle-border {
+  border: 1.5px dashed rgba(201, 139, 161, 0.45);
+}
+
+/* Soft washi tape strips */
+.washi-pink {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(248, 220, 229, 0.92),
+    rgba(248, 220, 229, 0.92) 6px,
+    rgba(255, 254, 252, 0.72) 6px,
+    rgba(255, 254, 252, 0.72) 12px
+  );
+}
+
+.washi-blue {
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(223, 236, 248, 0.94),
+    rgba(223, 236, 248, 0.94) 6px,
+    rgba(255, 254, 252, 0.72) 6px,
+    rgba(255, 254, 252, 0.72) 12px
+  );
+}
+
+.washi-lavender {
+  background: linear-gradient(90deg, rgba(233, 224, 245, 0.92), rgba(248, 220, 229, 0.8));
+}
+
+.washi-peach {
+  background: linear-gradient(90deg, rgba(249, 229, 213, 0.94), rgba(255, 248, 240, 0.88));
+}
+
+/* Die-cut Pinterest sticker vibrant drop shadow & contrast */
+.sticker-shadow {
+  filter: drop-shadow(0 8px 14px rgba(176, 86, 122, 0.28))
+    drop-shadow(0 2px 5px rgba(125, 76, 98, 0.16))
+    saturate(1.2)
+    contrast(1.1);
+}
+
+/* Soft tactile paper grain for folded envelopes */
+.envelope-paper {
+  background-color: #FFFEFC;
+  background-image:
+    radial-gradient(rgba(201, 91, 127, 0.06) 1px, transparent 1px),
+    linear-gradient(155deg, rgba(255, 254, 252, 0.96) 0%, rgba(255, 244, 236, 0.92) 55%, rgba(248, 220, 229, 0.42) 100%);
+  background-size: 16px 16px, 100% 100%;
+}
+
+/* 3D card & envelope helpers (GPU composited) */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Dynamic, organic GPU sticker animations */
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-1deg) scale(1);
+  }
+  28% {
+    transform: translate3d(3px, -7px, 0) rotate(2deg) scale(1.015);
+  }
+  58% {
+    transform: translate3d(-2px, -11px, 0) rotate(3deg) scale(1);
+  }
+  82% {
+    transform: translate3d(-3px, -4px, 0) rotate(-0.5deg) scale(0.99);
+  }
+}
+
+@keyframes float-sway {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-3.5deg);
+  }
+  30% {
+    transform: translate3d(5px, -6px, 0) rotate(1.5deg);
+  }
+  60% {
+    transform: translate3d(8px, -10px, 0) rotate(4.5deg);
+  }
+  85% {
+    transform: translate3d(2px, -3px, 0) rotate(-1deg);
+  }
+}
+
+@keyframes heart-bounce {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-2deg) scale(1);
+  }
+  22% {
+    transform: translate3d(0, -11px, 0) rotate(3deg) scale(1.08);
+  }
+  40% {
+    transform: translate3d(0, -3px, 0) rotate(-1deg) scale(0.97);
+  }
+  58% {
+    transform: translate3d(0, -8px, 0) rotate(2deg) scale(1.05);
+  }
+  78% {
+    transform: translate3d(0, -2px, 0) rotate(-1.5deg) scale(1);
+  }
+}
+
+@keyframes butterfly-fly {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-6deg) scaleX(1) scaleY(1);
+  }
+  12% {
+    transform: translate3d(5px, -6px, 0) rotate(-2deg) scaleX(0.76) scaleY(1.03);
+  }
+  25% {
+    transform: translate3d(11px, -12px, 0) rotate(4deg) scaleX(1) scaleY(0.98);
+  }
+  37% {
+    transform: translate3d(16px, -8px, 0) rotate(7deg) scaleX(0.74) scaleY(1.04);
+  }
+  50% {
+    transform: translate3d(20px, -3px, 0) rotate(5deg) scaleX(1) scaleY(1);
+  }
+  62% {
+    transform: translate3d(13px, -11px, 0) rotate(0deg) scaleX(0.78) scaleY(1.03);
+  }
+  75% {
+    transform: translate3d(6px, -14px, 0) rotate(-4deg) scaleX(1) scaleY(0.98);
+  }
+  88% {
+    transform: translate3d(2px, -7px, 0) rotate(-7deg) scaleX(0.8) scaleY(1.02);
+  }
+}
+
+@keyframes butterfly-curve-left {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-8deg);
+  }
+  20% {
+    transform: translate3d(-18px, -14px, 0) rotate(-14deg);
+  }
+  45% {
+    transform: translate3d(-32px, -6px, 0) rotate(4deg);
+  }
+  70% {
+    transform: translate3d(-14px, -22px, 0) rotate(10deg);
+  }
+  88% {
+    transform: translate3d(-5px, -9px, 0) rotate(-4deg);
+  }
+}
+
+@keyframes butterfly-curve-right {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(6deg);
+  }
+  22% {
+    transform: translate3d(18px, -15px, 0) rotate(14deg);
+  }
+  48% {
+    transform: translate3d(34px, -5px, 0) rotate(-3deg);
+  }
+  72% {
+    transform: translate3d(16px, -22px, 0) rotate(-9deg);
+  }
+  90% {
+    transform: translate3d(6px, -8px, 0) rotate(4deg);
+  }
+}
+
+@keyframes butterfly-glide {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-5deg);
+  }
+  25% {
+    transform: translate3d(26px, -18px, 0) rotate(8deg);
+  }
+  50% {
+    transform: translate3d(44px, -4px, 0) rotate(12deg);
+  }
+  75% {
+    transform: translate3d(18px, 10px, 0) rotate(-8deg);
+  }
+}
+
+@keyframes wing-flap-left {
+  0%, 100% {
+    transform: scaleX(1) skewY(0deg);
+  }
+  50% {
+    transform: scaleX(0.46) skewY(-6deg);
+  }
+}
+
+@keyframes wing-flap-right {
+  0%, 100% {
+    transform: scaleX(1) skewY(0deg);
+  }
+  50% {
+    transform: scaleX(0.46) skewY(6deg);
+  }
+}
+
+@keyframes flower-sway {
+  0%, 100% {
+    transform: rotate(-6deg) translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: rotate(3deg) translate3d(2px, -4px, 0) scale(1.02);
+  }
+  52% {
+    transform: rotate(8deg) translate3d(3px, -2px, 0) scale(1);
+  }
+  78% {
+    transform: rotate(-2deg) translate3d(-1px, -5px, 0) scale(1.015);
+  }
+}
+
+@keyframes bow-wiggle {
+  0%, 100% {
+    transform: rotate(-4deg) scale(1);
+  }
+  24% {
+    transform: rotate(4.5deg) translate3d(0, -3px, 0) scale(1.05);
+  }
+  48% {
+    transform: rotate(-2deg) translate3d(0, -1px, 0) scale(0.99);
+  }
+  72% {
+    transform: rotate(3.5deg) translate3d(0, -4px, 0) scale(1.04);
+  }
+}
+
+@keyframes teddy-idle {
+  0%, 100% {
+    transform: rotate(-3.5deg) translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: rotate(2.5deg) translate3d(0, -5px, 0) scale(1.03, 0.99);
+  }
+  50% {
+    transform: rotate(-1deg) translate3d(0, -2px, 0) scale(1, 1.02);
+  }
+  75% {
+    transform: rotate(3.5deg) translate3d(0, -4px, 0) scale(1.02);
+  }
+}
+
+@keyframes twinkle-star {
+  0%, 100% {
+    opacity: 0.68;
+    transform: scale(0.88) rotate(-6deg);
+    filter: drop-shadow(0 5px 10px rgba(255, 200, 90, 0.28)) saturate(1.2) contrast(1.1);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.16) rotate(5deg);
+    filter: drop-shadow(0 7px 16px rgba(255, 205, 95, 0.6)) saturate(1.25) contrast(1.12);
+  }
+  55% {
+    opacity: 0.82;
+    transform: scale(0.96) rotate(-2deg);
+    filter: drop-shadow(0 5px 11px rgba(255, 200, 90, 0.35)) saturate(1.2) contrast(1.1);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1.12) rotate(8deg);
+    filter: drop-shadow(0 7px 16px rgba(255, 160, 195, 0.56)) saturate(1.25) contrast(1.12);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-float-gentle {
+  animation: float-gentle 6.6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.animate-float-sway {
+  animation: float-sway 7.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.animate-heart-bounce {
+  animation: heart-bounce 4.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.animate-butterfly-drift {
+  animation: butterfly-fly 7.2s ease-in-out infinite;
+}
+
+.animate-butterfly-curve-left {
+  animation: butterfly-curve-left 8.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.animate-butterfly-curve-right {
+  animation: butterfly-curve-right 9.4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.animate-butterfly-glide {
+  animation: butterfly-glide 11.5s ease-in-out infinite;
+}
+
+.animate-wing-flap-left {
+  transform-box: view-box;
+  transform-origin: 40px 36px;
+  animation: wing-flap-left 0.48s ease-in-out infinite;
+}
+
+.animate-wing-flap-right {
+  transform-box: view-box;
+  transform-origin: 40px 36px;
+  animation: wing-flap-right 0.48s ease-in-out infinite;
+}
+
+.animate-flower-sway {
+  animation: flower-sway 5.6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.animate-bow-wiggle {
+  animation: bow-wiggle 5.1s ease-in-out infinite;
+}
+
+.animate-teddy-idle {
+  animation: teddy-idle 5.8s ease-in-out infinite;
+}
+
+.animate-twinkle {
+  animation: twinkle-star 3.6s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 28s linear infinite;
+}
+
+.pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
+.birthday-header {
+  padding-top: env(safe-area-inset-top);
+}
+
+.page-hidden *,
+.page-hidden *::before,
+.page-hidden *::after {
+  animation-play-state: paused !important;
+}
+
+@media (max-width: 639px) {
+  html {
+    scroll-padding-top: calc(4rem + env(safe-area-inset-top));
+  }
+
+  /* Keep the scrapbook motion, with less travel on compact touch screens. */
+  .animate-float-gentle,
+  .animate-float-sway,
+  .animate-heart-bounce,
+  .animate-butterfly-drift,
+  .animate-butterfly-curve-left,
+  .animate-butterfly-curve-right,
+  .animate-butterfly-glide,
+  .animate-flower-sway,
+  .animate-bow-wiggle,
+  .animate-teddy-idle {
+    animation-duration: 9s;
+  }
+
+  .animate-wing-flap-left,
+  .animate-wing-flap-right {
+    animation-duration: 0.7s;
+  }
+
+  .animate-twinkle {
+    animation-duration: 5s;
+  }
+
+  .blur-3xl {
+    --tw-blur: blur(24px);
+  }
+
+  .backdrop-blur-md {
+    --tw-backdrop-blur: blur(8px);
+  }
+
+  .backdrop-blur-sm {
+    --tw-backdrop-blur: blur(4px);
+  }
+
+  button:active,
+  [role="button"]:active {
+    scale: 0.985;
+  }
+
+  .music-player-control {
+    left: max(1rem, env(safe-area-inset-left));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .love-note-toast {
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(5rem, calc(5rem + env(safe-area-inset-bottom)));
+  }
+}
+
+@media (hover: none) {
+  .group:hover .group-hover\:-translate-y-1\.5 {
+    --tw-translate-y: 0;
+  }
+
+  .group:hover .group-hover\:scale-105 {
+    --tw-scale-x: 1;
+    --tw-scale-y: 1;
+  }
+}
+
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-float-gentle,
+  .animate-float-sway,
+  .animate-heart-bounce,
+  .animate-butterfly-drift,
+  .animate-butterfly-curve-left,
+  .animate-butterfly-curve-right,
+  .animate-butterfly-glide,
+  .animate-wing-flap-left,
+  .animate-wing-flap-right,
+  .animate-flower-sway,
+  .animate-bow-wiggle,
+  .animate-teddy-idle,
+  .animate-twinkle,
+  .animate-spin-slow {
+    animation: none !important;
+  }
+}

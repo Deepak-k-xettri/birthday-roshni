@@ -1,0 +1,6 @@
+{
+  "name": "Eighteen & Enchanted — 18th Birthday Celebration",
+  "description": "A dreamy, romantic, interactive 18th birthday fairytale & digital scrapbook celebration website.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
