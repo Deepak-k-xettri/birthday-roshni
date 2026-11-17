@@ -359,7 +359,8 @@ export const OpeningEnvelope: React.FC<OpeningEnvelopeProps> = ({
                 className="absolute inset-0 h-full w-full"
                 preserveAspectRatio="none"
                 style={{
-                  transform: 'rotateX(180deg)',
+                  transform: 'rotateY(180deg)',
+                  transformOrigin: '50% 50%',
                   backfaceVisibility: 'hidden',
                   WebkitBackfaceVisibility: 'hidden',
                 }}
