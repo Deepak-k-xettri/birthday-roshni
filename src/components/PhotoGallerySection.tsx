@@ -10,6 +10,7 @@ import {
   DaisySticker,
   DoodleSticker,
   FlowerSticker,
+  GiftBoxSticker,
   HeartSticker,
   RibbonSticker,
   StarSticker,
