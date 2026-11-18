@@ -307,7 +307,7 @@ export const birthdayConfig: BirthdayConfig = {
     photos: [
       {
         id: 'photo-1',
-        src: '/images/photo1.jpg',
+        src: '/images/photo1.png',
         fallbackSrc: '/src/assets/images/memory_birthday_cake_1794833744599.jpg',
         fallbackPalette: 'pink',
         fallbackMotif: 'cake',
@@ -319,7 +319,7 @@ export const birthdayConfig: BirthdayConfig = {
       },
       {
         id: 'photo-2',
-        src: '/images/photo2.jpg',
+        src: '/images/photo2.png',
         fallbackSrc: '/src/assets/images/memory_golden_hour_1794833744645.jpg',
         fallbackPalette: 'peach',
         fallbackMotif: 'daisy',
@@ -331,7 +331,7 @@ export const birthdayConfig: BirthdayConfig = {
       },
       {
         id: 'photo-3',
-        src: '/images/photo3.jpg',
+        src: '/images/photo3.png',
         fallbackSrc: '/src/assets/images/memory_sunset_walk_1794833743235.jpg',
         fallbackPalette: 'blue',
         fallbackMotif: 'butterfly',
@@ -343,7 +343,7 @@ export const birthdayConfig: BirthdayConfig = {
       },
       {
         id: 'photo-4',
-        src: '/images/photo4.jpg',
+        src: '/images/photo4.png',
         fallbackSrc: '/src/assets/images/memory_sparkler_night_1794833745019.jpg',
         fallbackPalette: 'lavender',
         fallbackMotif: 'star',
@@ -355,7 +355,7 @@ export const birthdayConfig: BirthdayConfig = {
       },
       {
         id: 'photo-5',
-        src: '/images/photo5.jpg',
+        src: '/images/photo5.png',
         fallbackSrc: '/src/assets/images/hero_birthday_portrait_1794833742876.jpg',
         fallbackPalette: 'cream',
         fallbackMotif: 'letter',
