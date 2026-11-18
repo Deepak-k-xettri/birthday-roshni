@@ -6,41 +6,60 @@ export const MusicPlayer: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [awaitingGesture, setAwaitingGesture] = useState(false);
+  const [isBuffering, setIsBuffering] = useState(false);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const handlePlay = () => {
+    const handlePlaying = () => {
       setIsPlaying(true);
+      setIsBuffering(false);
       setAwaitingGesture(false);
     };
-    const handlePause = () => setIsPlaying(false);
+    const handlePause = () => {
+      setIsPlaying(false);
+      setIsBuffering(false);
+    };
+    const handleWaiting = () => {
+      setIsPlaying(false);
+      setIsBuffering(true);
+    };
     const handleFirstGesture = (event: Event) => {
       const target = event.target as HTMLElement | null;
       if (target?.closest('.music-player-control')) return;
-      void audio.play().catch(() => setAwaitingGesture(true));
+      void audio.play().catch(() => {
+        setIsBuffering(false);
+        setAwaitingGesture(true);
+      });
     };
     const detachFirstGesture = () => {
-      window.removeEventListener('pointerdown', handleFirstGesture);
-      window.removeEventListener('keydown', handleFirstGesture);
+      window.removeEventListener('pointerdown', handleFirstGesture, true);
+      window.removeEventListener('keydown', handleFirstGesture, true);
     };
-    audio.addEventListener('play', handlePlay);
+    audio.addEventListener('playing', handlePlaying);
     audio.addEventListener('pause', handlePause);
-    audio.addEventListener('play', detachFirstGesture, { once: true });
+    audio.addEventListener('waiting', handleWaiting);
+    audio.addEventListener('playing', detachFirstGesture, { once: true });
 
     // Try immediately; if Chrome blocks audible autoplay, retry on a real
     // gesture anywhere on the page and keep retrying until playback begins.
-    void audio.play().catch(() => setAwaitingGesture(true));
-    window.addEventListener('pointerdown', handleFirstGesture);
-    window.addEventListener('keydown', handleFirstGesture);
+    audio.load();
+    setIsBuffering(true);
+    void audio.play().catch(() => {
+      setIsBuffering(false);
+      setAwaitingGesture(true);
+    });
+    window.addEventListener('pointerdown', handleFirstGesture, true);
+    window.addEventListener('keydown', handleFirstGesture, true);
 
     return () => {
-      audio.removeEventListener('play', handlePlay);
+      audio.removeEventListener('playing', handlePlaying);
       audio.removeEventListener('pause', handlePause);
-      audio.removeEventListener('play', detachFirstGesture);
-      window.removeEventListener('pointerdown', handleFirstGesture);
-      window.removeEventListener('keydown', handleFirstGesture);
+      audio.removeEventListener('waiting', handleWaiting);
+      audio.removeEventListener('playing', detachFirstGesture);
+      window.removeEventListener('pointerdown', handleFirstGesture, true);
+      window.removeEventListener('keydown', handleFirstGesture, true);
       audio.pause();
     };
   }, []);
@@ -49,8 +68,13 @@ export const MusicPlayer: React.FC = () => {
     const audio = audioRef.current;
     if (!audio) return;
     if (audio.paused) {
-      void audio.play().catch(() => setAwaitingGesture(true));
+      setIsBuffering(true);
+      void audio.play().catch(() => {
+        setIsBuffering(false);
+        setAwaitingGesture(true);
+      });
     } else {
+      setIsBuffering(false);
       audio.pause();
     }
   };
@@ -71,7 +95,9 @@ export const MusicPlayer: React.FC = () => {
         <span className="whitespace-nowrap">
           {isPlaying
             ? `${birthdayConfig.music.trackTitle} · Playing`
-            : awaitingGesture
+            : isBuffering
+              ? 'Loading music…'
+              : awaitingGesture
               ? 'Tap for Music'
               : 'Play Birthday Music'}
         </span>
