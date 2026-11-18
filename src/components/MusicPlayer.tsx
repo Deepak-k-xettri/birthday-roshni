@@ -49,7 +49,6 @@ export const MusicPlayer: React.FC = () => {
   const stepRef = useRef<number>(0);
   const isPlayingRef = useRef<boolean>(false);
   const userPausedRef = useRef<boolean>(false);
-  const gestureAttachedRef = useRef<boolean>(false);
 
   const buildMasterBus = (ctx: AudioContext) => {
     if (masterBusRef.current) return masterBusRef.current;
@@ -149,18 +148,22 @@ export const MusicPlayer: React.FC = () => {
     if (!audioCtxRef.current) {
       audioCtxRef.current = new AudioCtx();
     }
+    // Mark playback as starting before awaiting resume so a pending autoplay
+    // check cannot start a second music source at the same time.
+    isPlayingRef.current = true;
     if (audioCtxRef.current.state === 'suspended') {
       try {
         await audioCtxRef.current.resume();
       } catch {
+        isPlayingRef.current = false;
         return false;
       }
     }
     if (audioCtxRef.current.state !== 'running') {
+      isPlayingRef.current = false;
       return false;
     }
 
-    isPlayingRef.current = true;
     setIsPlaying(true);
     setAwaitingGesture(false);
     if (timerRef.current === null) {
@@ -172,17 +175,7 @@ export const MusicPlayer: React.FC = () => {
   const attemptStartPlayback = async (fromBeginning: boolean): Promise<boolean> => {
     if (userPausedRef.current) return false;
 
-    if (hasRealAudioRef.current === null) {
-      try {
-        const res = await fetch(birthdayConfig.music.audioSrc, { method: 'HEAD' });
-        const contentType = res.headers.get('content-type') || '';
-        hasRealAudioRef.current = res.ok && contentType.startsWith('audio/');
-      } catch {
-        hasRealAudioRef.current = false;
-      }
-    }
-
-    if (hasRealAudioRef.current) {
+    if (hasRealAudioRef.current === true) {
       try {
         if (!audioRef.current) {
           const audio = new Audio(birthdayConfig.music.audioSrc);
@@ -193,12 +186,13 @@ export const MusicPlayer: React.FC = () => {
         } else if (fromBeginning) {
           audioRef.current.currentTime = 0;
         }
-        await audioRef.current.play();
         isPlayingRef.current = true;
+        await audioRef.current.play();
         setIsPlaying(true);
         setAwaitingGesture(false);
         return true;
       } catch {
+        isPlayingRef.current = false;
         // Autoplay blocked; fall back to gesture listener below
         return false;
       }
@@ -213,23 +207,47 @@ export const MusicPlayer: React.FC = () => {
   useEffect(() => {
     let mounted = true;
 
-    const handleFirstGesture = () => {
-      gestureAttachedRef.current = false;
+    const detachFirstGesture = () => {
       window.removeEventListener('pointerdown', handleFirstGesture);
       window.removeEventListener('keydown', handleFirstGesture);
+    };
+
+    const handleFirstGesture = (event: Event) => {
+      const target = event.target as HTMLElement | null;
+      detachFirstGesture();
+      // Let the player's own click handler handle its first tap without
+      // toggling straight back to paused.
+      if (target?.closest('.music-player-control')) return;
       if (!userPausedRef.current && !isPlayingRef.current) {
-        attemptStartPlayback(stepRef.current === 0 && !audioRef.current?.currentTime);
+        if (hasRealAudioRef.current === true) {
+          void attemptStartPlayback(stepRef.current === 0 && !audioRef.current?.currentTime);
+        } else {
+          void startSynth();
+        }
       }
     };
 
+    // Attach immediately, before the optional audio-file check, so the first
+    // envelope tap can unlock audio on mobile browsers.
+    window.addEventListener('pointerdown', handleFirstGesture, { once: true });
+    window.addEventListener('keydown', handleFirstGesture, { once: true });
+
     const initAutoplay = async () => {
+      try {
+        const res = await fetch(birthdayConfig.music.audioSrc, { method: 'HEAD' });
+        const contentType = res.headers.get('content-type') || '';
+        hasRealAudioRef.current = res.ok && contentType.startsWith('audio/');
+      } catch {
+        hasRealAudioRef.current = false;
+      }
+      if (!mounted || isPlayingRef.current) return;
+
       const started = await attemptStartPlayback(true);
       if (!mounted) return;
-      if (!started && !userPausedRef.current && !gestureAttachedRef.current) {
+      if (started) {
+        detachFirstGesture();
+      } else if (!userPausedRef.current) {
         setAwaitingGesture(true);
-        gestureAttachedRef.current = true;
-        window.addEventListener('pointerdown', handleFirstGesture, { once: true });
-        window.addEventListener('keydown', handleFirstGesture, { once: true });
       }
     };
 
@@ -237,8 +255,7 @@ export const MusicPlayer: React.FC = () => {
 
     return () => {
       mounted = false;
-      window.removeEventListener('pointerdown', handleFirstGesture);
-      window.removeEventListener('keydown', handleFirstGesture);
+      detachFirstGesture();
       pauseSynth();
       if (audioRef.current) {
         audioRef.current.pause();
