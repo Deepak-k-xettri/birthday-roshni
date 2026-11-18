@@ -8,9 +8,7 @@
  * 1. Photos: Place your images inside `public/images/` as:
  *      portrait.jpg, photo1.jpg ... photo7.jpg
  *    (Photos display purely in scrapbook & Polaroid frames without captions.)
- * 2. Music:  Place your song inside `public/music/birthday-music.mp3`
- *    (If no MP3 is uploaded yet, the player plays a built-in soft romantic
- *     piano & music-box instrumental automatically.)
+ * 2. Music:  Place your MP3 at `public/music/birthday-music.mp3`.
  * ============================================================================
  */
 
@@ -587,7 +585,7 @@ export const birthdayConfig: BirthdayConfig = {
 
   music: {
     audioSrc: '/music/birthday-music.mp3',
-    trackTitle: 'For Roshni',
+    trackTitle: 'Your Love',
   },
 
   sweetLoveNotes: [

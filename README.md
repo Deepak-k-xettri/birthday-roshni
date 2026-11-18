@@ -17,7 +17,7 @@ Vite serves the site at `http://localhost:3000`. To create a production build, r
 
 - Edit the recipient's name, birthday text, story, letter, poems, gallery captions, and other messages in [`src/config/birthdayConfig.ts`](src/config/birthdayConfig.ts).
 - Add a portrait and gallery photos in [`public/images/README.txt`](public/images/README.txt).
-- Add an optional background song in [`public/music/README.txt`](public/music/README.txt).
+- Replace the looping background MP3 using the instructions in [`public/music/README.txt`](public/music/README.txt).
 - Built-in animated stickers are implemented in `src/components/Stickers.tsx`.
 
 The site includes bundled fallback artwork for the portrait and some gallery entries. Missing gallery images without a bundled fallback display a decorative scrapbook placeholder.

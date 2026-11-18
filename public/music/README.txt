@@ -1,9 +1,9 @@
-HOW TO ADD BACKGROUND MUSIC
-==========================
-Place your favorite soft romantic `.mp3` song in this folder named:
+BACKGROUND MUSIC
+================
+The birthday site plays `birthday-music.mp3` on a loop. The player attempts to
+start automatically, but browsers such as Chrome may wait for the visitor's
+first interaction before allowing audible playback. The music button can also
+be used to pause and resume the track.
 
-- birthday-music.mp3
-
-The player automatically starts playback from the beginning when the page opens (or on first tap if the browser blocks autoplay), and preserves your exact paused timestamp when pausing and resuming.
-
-If no `.mp3` file is present yet, the Music Player automatically plays a built-in soft romantic piano instrumental.
+Replace `birthday-music.mp3` in this folder to change the song. The source path
+and displayed track title are configured in `src/config/birthdayConfig.ts`.
