@@ -16,6 +16,7 @@ import {
 
 interface OpeningEnvelopeProps {
   onEnterCelebration: () => void;
+  onStartMusic: () => void;
   onTriggerConfetti: () => void;
 }
 
@@ -40,6 +41,7 @@ const STAGE_ORDER: EnvelopeStage[] = [
 
 export const OpeningEnvelope: React.FC<OpeningEnvelopeProps> = ({
   onEnterCelebration,
+  onStartMusic,
   onTriggerConfetti,
 }) => {
   const [stage, setStage] = useState<EnvelopeStage>('sealed');
@@ -62,6 +64,9 @@ export const OpeningEnvelope: React.FC<OpeningEnvelopeProps> = ({
   const handleOpenSurprise = () => {
     if (stage !== 'sealed') return;
 
+    // Start the song directly inside the visitor's envelope tap so Chrome
+    // recognizes it as a user-initiated playback request.
+    onStartMusic();
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     onTriggerConfetti();
 
@@ -432,7 +437,10 @@ export const OpeningEnvelope: React.FC<OpeningEnvelopeProps> = ({
               </p>
               <button
                 type="button"
-                onClick={onEnterCelebration}
+                onClick={() => {
+                  onStartMusic();
+                  onEnterCelebration();
+                }}
                 className="min-h-[44px] rounded-full border border-[#E7C6D2] bg-[#FFFEFC]/85 px-5 py-1.5 text-xs font-semibold text-[#5E434F] shadow-sm transition-colors hover:bg-[#F8DCE5]/50"
               >
                 Enter Scrapbook Now ♡

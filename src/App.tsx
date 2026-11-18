@@ -79,6 +79,7 @@ export default function App() {
         {!hasEntered ? (
           <OpeningEnvelope
             key="opening"
+            onStartMusic={() => window.dispatchEvent(new Event('birthday-music-start'))}
             onTriggerConfetti={() => triggerConfetti(0.45, 58)}
             onEnterCelebration={() => {
               setHasEntered(true);

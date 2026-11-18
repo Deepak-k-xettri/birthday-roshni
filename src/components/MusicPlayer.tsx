@@ -25,13 +25,18 @@ export const MusicPlayer: React.FC = () => {
       setIsPlaying(false);
       setIsBuffering(true);
     };
-    const handleFirstGesture = (event: Event) => {
-      const target = event.target as HTMLElement | null;
-      if (target?.closest('.music-player-control')) return;
+    const startFromGesture = () => {
+      setIsBuffering(true);
+      setAwaitingGesture(false);
       void audio.play().catch(() => {
         setIsBuffering(false);
         setAwaitingGesture(true);
       });
+    };
+    const handleFirstGesture = (event: Event) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.closest('.music-player-control')) return;
+      startFromGesture();
     };
     const detachFirstGesture = () => {
       window.removeEventListener('pointerdown', handleFirstGesture, true);
@@ -52,6 +57,7 @@ export const MusicPlayer: React.FC = () => {
     });
     window.addEventListener('pointerdown', handleFirstGesture, true);
     window.addEventListener('keydown', handleFirstGesture, true);
+    window.addEventListener('birthday-music-start', startFromGesture);
 
     return () => {
       audio.removeEventListener('playing', handlePlaying);
@@ -60,6 +66,7 @@ export const MusicPlayer: React.FC = () => {
       audio.removeEventListener('playing', detachFirstGesture);
       window.removeEventListener('pointerdown', handleFirstGesture, true);
       window.removeEventListener('keydown', handleFirstGesture, true);
+      window.removeEventListener('birthday-music-start', startFromGesture);
       audio.pause();
     };
   }, []);
