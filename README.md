@@ -1,20 +1,23 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Roshni's 18th Birthday Scrapbook
 
-# Run and deploy your AI Studio app
+A personal birthday website for Roshni, with a Nepali and English greeting, an opening envelope, a story from Class 10 to Class 12, a love letter, poems, a photo gallery, 18 birthday messages, surprise notes, confetti, and a closing birthday wish. Visitors can also play background music and open the photos for a closer look.
 
-This contains everything you need to run your app locally.
+## Run locally
 
-View your app in AI Studio: https://ai.studio/apps/c38776c8-abaf-4f6c-b46f-66c91e27080d
+Prerequisite: Node.js.
 
-## Run Locally
+```sh
+npm install
+npm run dev
+```
 
-**Prerequisites:**  Node.js
+Vite serves the site at `http://localhost:3000`. To create a production build, run `npm run build`; to preview it locally, run `npm run preview`.
 
+## Personalize the site
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+- Edit the recipient's name, birthday text, story, letter, poems, gallery captions, and other messages in [`src/config/birthdayConfig.ts`](src/config/birthdayConfig.ts).
+- Add a portrait and gallery photos in [`public/images/README.txt`](public/images/README.txt).
+- Add an optional background song in [`public/music/README.txt`](public/music/README.txt).
+- Built-in animated stickers are implemented in `src/components/Stickers.tsx`.
+
+The site includes bundled fallback artwork for the portrait and some gallery entries. Missing gallery images without a bundled fallback display a decorative scrapbook placeholder.
