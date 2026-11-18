@@ -148,9 +148,6 @@ export const MusicPlayer: React.FC = () => {
     if (!audioCtxRef.current) {
       audioCtxRef.current = new AudioCtx();
     }
-    // Mark playback as starting before awaiting resume so a pending autoplay
-    // check cannot start a second music source at the same time.
-    isPlayingRef.current = true;
     if (audioCtxRef.current.state === 'suspended') {
       try {
         await audioCtxRef.current.resume();
@@ -164,6 +161,10 @@ export const MusicPlayer: React.FC = () => {
       return false;
     }
 
+    // Only mark playback active after the browser has resumed the context.
+    // Autoplay resume can remain pending until a user gesture; setting this
+    // earlier would make the first envelope tap incorrectly skip the retry.
+    isPlayingRef.current = true;
     setIsPlaying(true);
     setAwaitingGesture(false);
     if (timerRef.current === null) {
