@@ -10,7 +10,6 @@ import { OurStorySection } from './components/OurStorySection';
 import { LoveLetterSection } from './components/LoveLetterSection';
 import { PoetrySection } from './components/PoetrySection';
 import { PhotoGallerySection } from './components/PhotoGallerySection';
-import { VideoMemoriesSection } from './components/VideoMemoriesSection';
 import { EighteenReasonsSection } from './components/EighteenReasonsSection';
 import { SurpriseBoxesSection } from './components/SurpriseBoxesSection';
 import { CelebrationSection } from './components/CelebrationSection';
@@ -168,7 +167,6 @@ export default function App() {
               <LoveLetterSection />
               <PoetrySection />
               <PhotoGallerySection />
-              <VideoMemoriesSection />
               <EighteenReasonsSection />
               <SurpriseBoxesSection
                 onUnwrapSurprise={() => triggerConfetti(0.5, 34)}

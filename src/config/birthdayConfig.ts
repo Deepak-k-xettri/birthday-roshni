@@ -4,14 +4,11 @@
  * ============================================================================
  * Edit ANY text, Nepali wish, poem, reason, or media filename below.
  *
- * HOW TO ADD YOUR OWN PHOTOS, VIDEOS & MUSIC:
+ * HOW TO ADD YOUR OWN PHOTOS & MUSIC:
  * 1. Photos: Place your images inside `public/images/` as:
- *      portrait.jpg, photo1.jpg, photo2.jpg ... photo10.jpg
+ *      portrait.jpg, photo1.jpg ... photo7.jpg
  *    (Photos display purely in scrapbook & Polaroid frames without captions.)
- * 2. Videos: Place `.mp4` clips inside `public/videos/` as:
- *      memory1.mp4, memory2.mp4, memory3.mp4
- *    Or paste a direct `.mp4` URL into `externalUrl` on any video entry.
- * 3. Music:  Place your song inside `public/music/birthday-music.mp3`
+ * 2. Music:  Place your song inside `public/music/birthday-music.mp3`
  *    (If no MP3 is uploaded yet, the player plays a built-in soft romantic
  *     piano & music-box instrumental automatically.)
  * ============================================================================
@@ -43,14 +40,6 @@ export interface PhotoMemory {
   frameStyle: 'polaroid' | 'rounded' | 'scrapbook';
   tapeStyle: 'pink' | 'blue' | 'lavender' | 'peach';
   tiltDeg: number;
-}
-
-export interface VideoMemory {
-  id: string;
-  src: string;
-  externalUrl?: string;
-  posterSrc: string;
-  alt: string;
 }
 
 export interface PoemEntry {
@@ -139,11 +128,6 @@ export interface BirthdayConfig {
     sectionTitle: string;
     sectionSubtitle: string;
     photos: PhotoMemory[];
-  };
-  videos: {
-    sectionTitle: string;
-    sectionSubtitle: string;
-    items: VideoMemory[];
   };
   reasons: {
     sectionTitle: string;
@@ -402,68 +386,6 @@ export const birthdayConfig: BirthdayConfig = {
         frameStyle: 'rounded',
         tapeStyle: 'lavender',
         tiltDeg: 0,
-      },
-      {
-        id: 'photo-8',
-        src: '/images/photo8.jpg',
-        fallbackPalette: 'peach',
-        fallbackMotif: 'heart',
-        alt: 'Roshni memory photograph 8',
-        category: 'Moments',
-        frameStyle: 'polaroid',
-        tapeStyle: 'peach',
-        tiltDeg: -1.4,
-      },
-      {
-        id: 'photo-9',
-        src: '/images/photo9.jpg',
-        fallbackPalette: 'lavender',
-        fallbackMotif: 'bow',
-        alt: 'Roshni memory photograph 9',
-        category: 'Celebrations',
-        frameStyle: 'scrapbook',
-        tapeStyle: 'pink',
-        tiltDeg: 1.3,
-      },
-      {
-        id: 'photo-10',
-        src: '/images/photo10.jpg',
-        fallbackPalette: 'cream',
-        fallbackMotif: 'daisy',
-        alt: 'Roshni memory photograph 10',
-        category: 'Sunsets',
-        frameStyle: 'polaroid',
-        tapeStyle: 'blue',
-        tiltDeg: -1,
-      },
-    ],
-  },
-
-  videos: {
-    sectionTitle: 'Video Keepsakes',
-    sectionSubtitle:
-      'Tap any frame to play. Place your own clips anytime inside public/videos/.',
-    items: [
-      {
-        id: 'video-1',
-        src: '/videos/memory1.mp4',
-        externalUrl: '',
-        posterSrc: '/src/assets/images/memory_birthday_cake_1794833744599.jpg',
-        alt: 'Roshni video memory 1',
-      },
-      {
-        id: 'video-2',
-        src: '/videos/memory2.mp4',
-        externalUrl: '',
-        posterSrc: '/src/assets/images/memory_golden_hour_1794833744645.jpg',
-        alt: 'Roshni video memory 2',
-      },
-      {
-        id: 'video-3',
-        src: '/videos/memory3.mp4',
-        externalUrl: '',
-        posterSrc: '/src/assets/images/memory_sparkler_night_1794833745019.jpg',
-        alt: 'Roshni video memory 3',
       },
     ],
   },

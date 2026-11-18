@@ -2,7 +2,7 @@ HOW TO ADD YOUR OWN PHOTOS
 ==========================
 Drop your personal photos into this folder (`public/images/`) using these exact filenames:
 
-- portrait.jpg  -> Hero portrait frame
+- portrait.jpg  -> it frameHero portra
 - photo1.jpg    -> Gallery Memory 1
 - photo2.jpg    -> Gallery Memory 2
 - photo3.jpg    -> Gallery Memory 3

@@ -10,7 +10,6 @@ import {
   DaisySticker,
   DoodleSticker,
   FlowerSticker,
-  GiftBoxSticker,
   HeartSticker,
   RibbonSticker,
   StarSticker,
@@ -101,36 +100,6 @@ const renderFrameDecorations = (index: number) => {
           <StarSticker className="animate-twinkle pointer-events-none absolute -bottom-4 -left-3 z-20 h-10 w-10" />
         </>
       );
-    case 7:
-      return (
-        <>
-          <BowSticker
-            variant="pink"
-            className="animate-bow-wiggle pointer-events-none absolute -top-5 -left-2 z-20 h-12 w-14 -rotate-12"
-          />
-          <FlowerSticker className="animate-flower-sway pointer-events-none absolute -bottom-4 right-10 z-20 h-11 w-11 rotate-6" />
-        </>
-      );
-    case 8:
-      return (
-        <>
-          <GiftBoxSticker className="animate-float-sway pointer-events-none absolute -top-5 right-0 z-20 h-13 w-13 rotate-6" />
-          <ButterflySticker
-            variant="peach"
-            className="animate-butterfly-curve-right pointer-events-none absolute -bottom-4 -left-3 z-20 h-12 w-12 -rotate-6"
-          />
-        </>
-      );
-    case 9:
-      return (
-        <>
-          <HeartSticker className="animate-heart-bounce pointer-events-none absolute -top-5 -left-3 z-20 h-12 w-12 -rotate-12" />
-          <RibbonSticker
-            variant="lavender"
-            className="animate-float-gentle pointer-events-none absolute -bottom-4 right-10 z-20 h-10 w-12 rotate-6"
-          />
-        </>
-      );
     default:
       return null;
   }
@@ -205,11 +174,26 @@ export const PhotoGallerySection: React.FC = () => {
         <ButterflySticker variant="peach" className="animate-butterfly-glide h-13 w-13" />
       </motion.div>
 
+      {/* Keep the scrapbook stickers from the removed keepsake cards in the gallery. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden md:block overflow-hidden">
+        <BowSticker variant="pink" className="animate-bow-wiggle absolute top-[28rem] left-[3%] h-12 w-14 -rotate-12" />
+        <FlowerSticker className="animate-flower-sway absolute top-[31rem] right-[4%] h-11 w-11 rotate-6" />
+        <GiftBoxSticker className="animate-float-sway absolute top-[48rem] right-[2%] h-13 w-13 rotate-6" />
+        <ButterflySticker variant="peach" className="animate-butterfly-curve-right absolute top-[51rem] left-[2%] h-12 w-12 -rotate-6" />
+        <HeartSticker className="animate-heart-bounce absolute bottom-36 left-[4%] h-12 w-12 -rotate-12" />
+        <RibbonSticker variant="lavender" className="animate-float-gentle absolute bottom-24 right-[4%] h-10 w-12 rotate-6" />
+        <ButterflySticker variant="peach" className="animate-butterfly-curve-right absolute top-[36rem] right-[8%] h-11 w-11" />
+        <FlowerSticker className="animate-flower-sway absolute top-[55rem] left-[6%] h-6 w-6" />
+        <StarSticker className="animate-twinkle absolute bottom-48 right-[7%] h-6 w-6" />
+        <BowSticker variant="pink" className="animate-bow-wiggle absolute bottom-28 left-[8%] h-10 w-12 rotate-6" />
+        <HeartSticker className="animate-heart-bounce absolute top-[60rem] right-[6%] h-10 w-10" />
+      </div>
+
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="relative flex flex-col items-center text-center">
           <div className="flex items-center gap-2.5 text-xs font-semibold tracking-[0.14em] uppercase text-[#8E6575]">
             <StarSticker className="animate-twinkle h-6 w-6" />
-            <span>Polaroid Scrapbook · 10 Photographs</span>
+            <span>Polaroid Scrapbook · {birthdayConfig.gallery.photos.length} Photographs</span>
             <DaisySticker className="animate-flower-sway h-6 w-6" />
           </div>
 
