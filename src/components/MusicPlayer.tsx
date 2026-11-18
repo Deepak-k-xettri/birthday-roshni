@@ -16,27 +16,29 @@ export const MusicPlayer: React.FC = () => {
       setAwaitingGesture(false);
     };
     const handlePause = () => setIsPlaying(false);
-    audio.addEventListener('play', handlePlay);
-    audio.addEventListener('pause', handlePause);
-
-    const tryAutoplay = () => {
-      void audio.play().catch(() => setAwaitingGesture(true));
-    };
     const handleFirstGesture = (event: Event) => {
       const target = event.target as HTMLElement | null;
       if (target?.closest('.music-player-control')) return;
-      window.removeEventListener('pointerdown', handleFirstGesture);
-      window.removeEventListener('keydown', handleFirstGesture);
       void audio.play().catch(() => setAwaitingGesture(true));
     };
+    const detachFirstGesture = () => {
+      window.removeEventListener('pointerdown', handleFirstGesture);
+      window.removeEventListener('keydown', handleFirstGesture);
+    };
+    audio.addEventListener('play', handlePlay);
+    audio.addEventListener('pause', handlePause);
+    audio.addEventListener('play', detachFirstGesture, { once: true });
 
-    tryAutoplay();
-    window.addEventListener('pointerdown', handleFirstGesture, { once: true });
-    window.addEventListener('keydown', handleFirstGesture, { once: true });
+    // Try immediately; if Chrome blocks audible autoplay, retry on a real
+    // gesture anywhere on the page and keep retrying until playback begins.
+    void audio.play().catch(() => setAwaitingGesture(true));
+    window.addEventListener('pointerdown', handleFirstGesture);
+    window.addEventListener('keydown', handleFirstGesture);
 
     return () => {
       audio.removeEventListener('play', handlePlay);
       audio.removeEventListener('pause', handlePause);
+      audio.removeEventListener('play', detachFirstGesture);
       window.removeEventListener('pointerdown', handleFirstGesture);
       window.removeEventListener('keydown', handleFirstGesture);
       audio.pause();
@@ -55,7 +57,7 @@ export const MusicPlayer: React.FC = () => {
 
   return (
     <div className="music-player-control fixed bottom-4 left-4 z-50 pb-safe">
-      <audio ref={audioRef} src={birthdayConfig.music.audioSrc} loop preload="auto" />
+      <audio ref={audioRef} src={birthdayConfig.music.audioSrc} loop preload="auto" autoPlay />
       <button
         type="button"
         onClick={toggleMusic}
