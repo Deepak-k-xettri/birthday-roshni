@@ -207,7 +207,7 @@ export const OpeningEnvelope: React.FC<OpeningEnvelopeProps> = ({
             }}
             aria-label={
               isSealed
-                ? 'Tap sealed envelope to open your 18th birthday letter'
+                ? 'Open the sealed envelope to begin your scrapbook'
                 : 'Birthday letter opening'
             }
             animate={
@@ -432,8 +432,8 @@ export const OpeningEnvelope: React.FC<OpeningEnvelopeProps> = ({
             >
               <p className="font-display text-xl italic text-[#C95B7F] sm:text-2xl">
                 {isRevealed
-                  ? 'A birthday wish unfolded just for you ♡'
-                  : 'Unfolding your birthday letter...'}
+                  ? 'A small piece of our story, unfolded for you ♡'
+                  : 'Unfolding your little scrapbook...'}
               </p>
               <button
                 type="button"

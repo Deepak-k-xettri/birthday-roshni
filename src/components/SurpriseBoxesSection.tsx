@@ -97,7 +97,7 @@ export const SurpriseBoxesSection: React.FC<SurpriseBoxesSectionProps> = ({
                         </p>
                         <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-[#C95B7F]">
                           <Sparkles className="h-3.5 w-3.5" />
-                          Tap to unwrap
+                          Open this little note
                         </span>
                       </motion.div>
                     ) : (

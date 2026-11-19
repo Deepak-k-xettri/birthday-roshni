@@ -61,7 +61,7 @@ export const EighteenReasonsSection: React.FC = () => {
 
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <span className="tabular-nums text-xs font-semibold text-[#7D616E]">
-              {openedCount} of 18 cards opened
+              {openedCount} of {birthdayConfig.reasons.items.length} cards opened
             </span>
             <span aria-hidden="true" className="text-[#D8C1CB]">
               ·

@@ -130,6 +130,19 @@ export const PoetrySection: React.FC = () => {
                 ))}
               </blockquote>
 
+              {poem.originalLines && (
+                <details className="mt-5 rounded-xl border border-[#EAD0DA] bg-white/65 p-4 text-left">
+                  <summary className="cursor-pointer text-sm font-semibold text-[#8E6575]">
+                    The original, just as I wrote it
+                  </summary>
+                  <blockquote className="mt-3 space-y-1 font-display text-base italic leading-relaxed text-[#6E535F]">
+                    {poem.originalLines.map((line, lineIdx) => (
+                      <p key={lineIdx}>{line}</p>
+                    ))}
+                  </blockquote>
+                </details>
+              )}
+
               <div className="mt-5 flex items-center justify-between border-t border-[#E6DCE4] pt-3">
                 <p className="font-nepali text-xs text-[#7D616E]">{poem.footnote}</p>
                 {idx % 2 === 0 ? (
