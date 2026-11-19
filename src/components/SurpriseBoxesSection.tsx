@@ -70,10 +70,11 @@ export const SurpriseBoxesSection: React.FC<SurpriseBoxesSectionProps> = ({
                   type="button"
                   onClick={() => toggleBox(box.id)}
                   aria-expanded={isOpen}
-                  className={`relative flex w-full flex-col justify-between overflow-hidden rounded-[22px] border p-5 text-left transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C95B7F] ${
+                  aria-label={`${isOpen ? 'Close' : 'Open'} ${box.label}: ${box.hint}`}
+                  className={`group relative flex min-h-[310px] w-full flex-col justify-between overflow-hidden rounded-[24px] border p-4 text-left transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C95B7F] sm:p-5 ${
                     isOpen
-                      ? 'border-[#EAD0DA] bg-[#FFFEFC] shadow-[0_14px_32px_rgba(164,114,134,0.14)]'
-                      : `bg-gradient-to-br ${tintClass} shadow-sm hover:-translate-y-1 hover:shadow-md`
+                      ? 'scrapbook-paper border-[#EAD0DA] shadow-[0_14px_32px_rgba(164,114,134,0.14)]'
+                      : `bg-gradient-to-br ${tintClass} shadow-[0_8px_24px_rgba(164,114,134,0.09)] hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(164,114,134,0.15)]`
                   }`}
                 >
                   <AnimatePresence mode="wait">
@@ -84,18 +85,25 @@ export const SurpriseBoxesSection: React.FC<SurpriseBoxesSectionProps> = ({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
                         transition={{ duration: 0.25 }}
-                        className="flex h-full min-h-[220px] flex-col items-center justify-center text-center"
+                        className="flex h-full min-h-[278px] flex-col items-center justify-center text-center"
                       >
                         <div className="relative mb-4 flex items-center justify-center">
-                          <GiftBoxSticker className="animate-float-gentle h-20 w-20" />
+                          <div className="relative h-[108px] w-44 -rotate-2 transition-transform duration-300 group-hover:rotate-0">
+                            <div className="envelope-paper absolute inset-0 rounded-xl border border-[#E5BFCE] shadow-[0_8px_20px_rgba(164,114,134,0.14)]" />
+                            <div className="absolute inset-x-0 top-0 z-10 h-[60%] bg-[#F6DDE6] [clip-path:polygon(0_0,100%_0,50%_100%)]" />
+                            <div className="absolute inset-x-0 bottom-0 z-20 h-[68%] rounded-b-xl bg-[#F8E6EC] [clip-path:polygon(0_0,50%_69%,100%_0,100%_100%,0_100%)]" />
+                            <span className="absolute top-[42%] left-1/2 z-30 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[#FFF8F0] bg-[#C95B7F] text-lg text-white shadow-md">
+                              ♡
+                            </span>
+                          </div>
                         </div>
                         <p className="text-xs font-semibold tracking-[0.12em] uppercase text-[#8E6575]">
                           {box.label}
                         </p>
-                        <p className="font-display mt-1.5 text-xl font-semibold text-[#4A343E]">
+                        <p className="font-script mt-1.5 text-2xl font-semibold leading-tight text-[#4A343E]">
                           {box.hint}
                         </p>
-                        <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-[#C95B7F]">
+                        <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-[#C95B7F]">
                           <Sparkles className="h-3.5 w-3.5" />
                           Open this little note
                         </span>
@@ -107,20 +115,20 @@ export const SurpriseBoxesSection: React.FC<SurpriseBoxesSectionProps> = ({
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                        className="flex h-full min-h-[220px] flex-col justify-between"
+                        className="flex h-full min-h-[278px] flex-col justify-between rounded-xl border border-white/75 bg-white/55 p-3 sm:p-4"
                       >
                         <div className="flex items-center justify-between gap-2">
-                          <span className="text-xs font-semibold text-[#C95B7F]">
+                          <span className="font-script text-lg font-semibold text-[#C95B7F] sm:text-xl">
                             {box.kind}
                           </span>
                           <StickerBadge kind={box.sticker} className="h-10 w-10" />
                         </div>
 
                         <div className="my-3">
-                          <h3 className="font-nepali text-xl font-semibold text-[#4A343E]">
+                          <h3 className="font-script text-2xl font-semibold leading-tight text-[#4A343E] sm:text-3xl">
                             {box.title}
                           </h3>
-                          <p className="font-nepali mt-2 text-sm leading-relaxed text-[#624954]">
+                          <p className="font-nepali mt-2 text-sm leading-relaxed text-[#624954] sm:text-[15px]">
                             {box.message}
                           </p>
                         </div>
