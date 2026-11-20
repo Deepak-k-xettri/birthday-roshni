@@ -6,7 +6,7 @@
  *
  * HOW TO ADD YOUR OWN PHOTOS & MUSIC:
  * 1. Photos: Place your images inside `public/images/` as:
- *      portrait.jpg, photo1.jpg ... photo7.jpg
+ *      portrait.jpg, photo1.webp ... photo5.webp, photo6.jpg, photo7.jpg
  *    (Photos display purely in scrapbook & Polaroid frames without captions.)
  * 2. Music:  Place your MP3 at `public/music/birthday-music.mp3`.
  * ============================================================================
@@ -185,7 +185,7 @@ export const birthdayConfig: BirthdayConfig = {
     nepaliGreeting: 'रोश्नी, जन्मदिनको धेरै धेरै शुभकामना। ❤️',
     supportingText: 'From shared homework and foggy mornings to the rare school-bus journey we get to share now, this little scrapbook holds some of our story.',
     portraitSrc: '/images/portrait.jpg',
-    portraitFallback: '/src/assets/images/hero_birthday_portrait_1794833742876.jpg',
+    portraitFallback: '/src/assets/images/hero_birthday_portrait_1794833742876.webp',
   },
 
   ourStory: {
@@ -237,8 +237,8 @@ export const birthdayConfig: BirthdayConfig = {
     photos: [
       {
         id: 'photo-1',
-        src: '/images/photo1.png',
-        fallbackSrc: '/src/assets/images/memory_birthday_cake_1794833744599.jpg',
+        src: '/images/photo1.webp',
+        fallbackSrc: '/src/assets/images/memory_birthday_cake_1794833744599.webp',
         fallbackPalette: 'pink',
         fallbackMotif: 'cake',
         alt: 'Roshni memory photograph 1',
@@ -249,8 +249,8 @@ export const birthdayConfig: BirthdayConfig = {
       },
       {
         id: 'photo-2',
-        src: '/images/photo2.png',
-        fallbackSrc: '/src/assets/images/memory_golden_hour_1794833744645.jpg',
+        src: '/images/photo2.webp',
+        fallbackSrc: '/src/assets/images/memory_golden_hour_1794833744645.webp',
         fallbackPalette: 'peach',
         fallbackMotif: 'daisy',
         alt: 'Roshni memory photograph 2',
@@ -261,8 +261,8 @@ export const birthdayConfig: BirthdayConfig = {
       },
       {
         id: 'photo-3',
-        src: '/images/photo3.png',
-        fallbackSrc: '/src/assets/images/memory_sunset_walk_1794833743235.jpg',
+        src: '/images/photo3.webp',
+        fallbackSrc: '/src/assets/images/memory_sunset_walk_1794833743235.webp',
         fallbackPalette: 'blue',
         fallbackMotif: 'butterfly',
         alt: 'Roshni memory photograph 3',
@@ -273,8 +273,8 @@ export const birthdayConfig: BirthdayConfig = {
       },
       {
         id: 'photo-4',
-        src: '/images/photo4.png',
-        fallbackSrc: '/src/assets/images/memory_sparkler_night_1794833745019.jpg',
+        src: '/images/photo4.webp',
+        fallbackSrc: '/src/assets/images/memory_sparkler_night_1794833745019.webp',
         fallbackPalette: 'lavender',
         fallbackMotif: 'star',
         alt: 'Roshni memory photograph 4',
@@ -285,8 +285,8 @@ export const birthdayConfig: BirthdayConfig = {
       },
       {
         id: 'photo-5',
-        src: '/images/photo5.png',
-        fallbackSrc: '/src/assets/images/hero_birthday_portrait_1794833742876.jpg',
+        src: '/images/photo5.webp',
+        fallbackSrc: '/src/assets/images/hero_birthday_portrait_1794833742876.webp',
         fallbackPalette: 'cream',
         fallbackMotif: 'letter',
         alt: 'Roshni memory photograph 5',

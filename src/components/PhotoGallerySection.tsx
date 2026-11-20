@@ -111,6 +111,8 @@ export const PhotoGallerySection: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [likedIds, setLikedIds] = useState<Record<string, boolean>>({});
   const sectionRef = useRef<HTMLElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const lastFocusedElementRef = useRef<HTMLElement | null>(null);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -126,19 +128,55 @@ export const PhotoGallerySection: React.FC = () => {
 
   const activePhoto = activeIndex !== null ? filteredPhotos[activeIndex] ?? null : null;
 
+  const openPhoto = (index: number, trigger: HTMLElement) => {
+    lastFocusedElementRef.current = trigger;
+    setActiveIndex(index);
+  };
+
+  const closePhoto = () => setActiveIndex(null);
+
+  useEffect(() => {
+    if (activeIndex === null) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      lastFocusedElementRef.current?.focus();
+    };
+  }, [activeIndex !== null]);
+
   useEffect(() => {
     if (activeIndex === null) return;
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setActiveIndex(null);
+      if (e.key === 'Escape') closePhoto();
       if (e.key === 'ArrowRight') {
+        e.preventDefault();
         setActiveIndex((prev) =>
           prev === null ? null : (prev + 1) % filteredPhotos.length
         );
       }
       if (e.key === 'ArrowLeft') {
+        e.preventDefault();
         setActiveIndex((prev) =>
           prev === null ? null : (prev - 1 + filteredPhotos.length) % filteredPhotos.length
         );
+      }
+      if (e.key === 'Tab') {
+        const dialog = document.querySelector<HTMLElement>('[aria-label="Photo lightbox"]');
+        const focusable = dialog?.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
+        );
+        if (!focusable?.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     };
     window.addEventListener('keydown', handleKey);
@@ -213,9 +251,9 @@ export const PhotoGallerySection: React.FC = () => {
             {birthdayConfig.gallery.sectionSubtitle}
           </p>
 
-          {/* Interactive Category Tabs */}
+          {/* Category filter buttons */}
           <div
-            role="tablist"
+            role="group"
             aria-label="Filter photo memories"
             className="mt-6 flex flex-wrap items-center justify-center gap-1.5 rounded-full border border-[#EAD0DA] bg-[#FFFEFC]/90 p-1.5 shadow-[0_6px_20px_rgba(164,114,134,0.08)] backdrop-blur-sm"
           >
@@ -225,8 +263,7 @@ export const PhotoGallerySection: React.FC = () => {
                 <button
                   key={category}
                   type="button"
-                  role="tab"
-                  aria-selected={active}
+                  aria-pressed={active}
                   onClick={() => {
                     setSelectedCategory(category);
                     setActiveIndex(null);
@@ -269,22 +306,15 @@ export const PhotoGallerySection: React.FC = () => {
                   className={`pointer-events-none absolute inset-0 rounded-2xl border shadow-sm transition-transform duration-300 group-hover:rotate-0 ${backingClass}`}
                 />
 
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => setActiveIndex(index)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      setActiveIndex(index);
-                    }
-                  }}
+                <button
+                  type="button"
+                  onClick={(event) => openPhoto(index, event.currentTarget)}
                   aria-label={`Open ${photo.alt}`}
                   style={{
                     transform:
                       photo.tiltDeg !== 0 ? `rotate(${photo.tiltDeg}deg)` : undefined,
                   }}
-                  className={`relative cursor-pointer transition-all duration-300 group-hover:rotate-0 group-hover:-translate-y-1.5 group-hover:shadow-[0_20px_44px_rgba(164,114,134,0.2)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C95B7F] ${
+                  className={`relative block w-full text-left transition-all duration-300 group-hover:rotate-0 group-hover:-translate-y-1.5 group-hover:shadow-[0_20px_44px_rgba(164,114,134,0.2)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C95B7F] ${
                     isPolaroid
                       ? 'rounded-xl border border-[#EAD4DD] bg-[#FFFEFC] p-3.5 pb-10 shadow-[0_14px_34px_rgba(155,112,130,0.14)]'
                       : isScrapbook
@@ -315,6 +345,7 @@ export const PhotoGallerySection: React.FC = () => {
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
+                </button>
 
                   {/* Minimal Heart Reaction Button in Polaroid Margin */}
                   <button
@@ -346,7 +377,7 @@ export const PhotoGallerySection: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setActiveIndex(null)}
+            onClick={closePhoto}
             className="fixed inset-0 z-50 flex items-center justify-center bg-[#3A242E]/75 p-4 backdrop-blur-sm"
             role="dialog"
             aria-modal="true"
@@ -366,9 +397,10 @@ export const PhotoGallerySection: React.FC = () => {
                 </span>
                 <button
                   type="button"
-                  onClick={() => setActiveIndex(null)}
+                  ref={closeButtonRef}
+                  onClick={closePhoto}
                   aria-label="Close photo lightbox"
-                  className="flex h-11 w-11 items-center justify-center rounded-full bg-[#F8DCE5]/55 text-[#4A343E] transition-colors hover:bg-[#F8DCE5]"
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-[#F8DCE5]/55 text-[#4A343E] transition-colors hover:bg-[#F8DCE5] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C95B7F]"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -390,8 +422,9 @@ export const PhotoGallerySection: React.FC = () => {
                 <button
                   type="button"
                   onClick={(e) => toggleLike(activePhoto.id, e)}
-                  aria-label="Heart photograph"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#EAD0DA] bg-[#FFFEFC] hover:bg-[#F8DCE5]/45"
+                  aria-label={likedIds[activePhoto.id] ? 'Unlike photograph' : 'Heart photograph'}
+                  aria-pressed={!!likedIds[activePhoto.id]}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#EAD0DA] bg-[#FFFEFC] hover:bg-[#F8DCE5]/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C95B7F]"
                 >
                   <Heart
                     className={`h-5 w-5 ${
@@ -411,7 +444,7 @@ export const PhotoGallerySection: React.FC = () => {
                       )
                     }
                     aria-label="Previous photo"
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-[#EAD0DA] bg-[#FFFEFC] text-[#4A343E] hover:bg-[#F8DCE5]/45"
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-[#EAD0DA] bg-[#FFFEFC] text-[#4A343E] hover:bg-[#F8DCE5]/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C95B7F]"
                   >
                     <ChevronLeft className="h-5 w-5" />
                   </button>
@@ -421,7 +454,7 @@ export const PhotoGallerySection: React.FC = () => {
                       setActiveIndex((activeIndex + 1) % filteredPhotos.length)
                     }
                     aria-label="Next photo"
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-[#EAD0DA] bg-[#FFFEFC] text-[#4A343E] hover:bg-[#F8DCE5]/45"
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-[#EAD0DA] bg-[#FFFEFC] text-[#4A343E] hover:bg-[#F8DCE5]/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C95B7F]"
                   >
                     <ChevronRight className="h-5 w-5" />
                   </button>

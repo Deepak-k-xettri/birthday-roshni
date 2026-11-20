@@ -4,7 +4,7 @@ A personal birthday website for Roshni, with a Nepali and English greeting, an o
 
 ## Run locally
 
-Prerequisite: Node.js.
+Prerequisite: Node.js 20.19 or newer, or Node.js 22.12 or newer.
 
 ```sh
 npm install
@@ -12,6 +12,13 @@ npm run dev
 ```
 
 Vite serves the site at `http://localhost:3000`. To create a production build, run `npm run build`; to preview it locally, run `npm run preview`.
+
+## Deploy
+
+The production build is a static site written to `dist/`. The included Vercel
+configuration builds with `npm run build` and serves that directory. The site
+does not need API keys or environment variables. Google Fonts are loaded from
+Google Fonts when available, with system font fallbacks.
 
 ## Personalize the site
 
