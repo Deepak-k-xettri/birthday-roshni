@@ -364,7 +364,6 @@ export const PhotoGallerySection: React.FC = () => {
                     />
                   </button>
                 </motion.div>
-              </div>
             );
           })}
         </div>
